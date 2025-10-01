@@ -65,3 +65,4 @@ class Event extends Model
         return $query->where('event_date', '>=', now()->toDateString());
     }
 }
+
