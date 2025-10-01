@@ -15,6 +15,9 @@ class Event extends Model
         'event_date',
         'event_time',
         'location',
+        'latitude',
+        'longitude',
+        'banner_image',
         'max_participants',
         'is_published',
     ];
@@ -42,7 +45,7 @@ class Event extends Model
         if (!$this->max_participants) {
             return null;
         }
-        
+
         return $this->max_participants - $this->registrations()->count();
     }
 
@@ -51,7 +54,7 @@ class Event extends Model
         if (!$this->max_participants) {
             return false;
         }
-        
+
         return $this->registrations()->count() >= $this->max_participants;
     }
 
@@ -64,5 +67,18 @@ class Event extends Model
     {
         return $query->where('event_date', '>=', now()->toDateString());
     }
-}
 
+    public function getBannerImageUrlAttribute()
+    {
+        if (!$this->banner_image) {
+            return null;
+        }
+
+        return asset('storage/' . $this->banner_image);
+    }
+
+    public function hasBannerImage()
+    {
+        return !empty($this->banner_image);
+    }
+}

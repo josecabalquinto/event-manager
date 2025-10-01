@@ -19,11 +19,9 @@ Route::get('/', function () {
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
-// Guest registration routes
-Route::middleware('guest')->group(function () {
-    Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])
-        ->name('events.register');
-});
+// Event registration routes (both guest and authenticated users)
+Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])
+    ->name('events.register');
 
 // Authenticated user routes
 Route::middleware('auth')->group(function () {
@@ -46,19 +44,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     })->name('dashboard');
 
     // Event management
+    Route::post('events/{event}/update', [AdminEventController::class, 'update'])->name('events.update-with-files');
     Route::resource('events', AdminEventController::class);
-    
+
     // User management
     Route::resource('users', AdminUserController::class);
-    
+
     // Participant management
     Route::get('participants', [AdminParticipantController::class, 'index'])->name('participants.index');
     Route::get('participants/{registration}', [AdminParticipantController::class, 'show'])->name('participants.show');
-    
+
     // Check-in/QR scanning
     Route::get('check-in', [CheckInController::class, 'index'])->name('check-in.index');
     Route::post('check-in/scan', [CheckInController::class, 'scan'])->name('check-in.scan');
     Route::get('events/{event}/check-ins', [CheckInController::class, 'eventCheckIns'])->name('events.check-ins');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

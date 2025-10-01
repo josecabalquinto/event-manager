@@ -24,7 +24,7 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="event in events" :key="event.id">
                                 <td class="px-6 py-4">{{ event.title }}</td>
-                                <td class="px-6 py-4">{{ event.event_date }}</td>
+                                <td class="px-6 py-4">{{ formatEventDateTime(event.event_date, event.event_time) }}</td>
                                 <td class="px-6 py-4">{{ event.location }}</td>
                                 <td class="px-6 py-4">{{ event.registrations_count }}</td>
                                 <td class="px-6 py-4">
@@ -55,4 +55,36 @@ import { Link } from '@inertiajs/vue3';
 defineProps({
     events: Array,
 });
+
+// Date formatting function
+const formatEventDateTime = (eventDate, eventTime) => {
+    try {
+        // Parse the date
+        const date = new Date(eventDate);
+        
+        // Format the date part
+        const dateOptions = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+        
+        // Handle time formatting
+        let timeStr = '';
+        if (eventTime) {
+            // Parse time string (assuming format like "14:30:00")
+            const [hours, minutes] = eventTime.split(':');
+            const hour24 = parseInt(hours);
+            const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
+            const ampm = hour24 >= 12 ? 'PM' : 'AM';
+            timeStr = ` ${hour12}${minutes !== '00' ? ':' + minutes : ''}${ampm}`;
+        }
+        
+        return `${formattedDate}${timeStr}`;
+    } catch (error) {
+        console.error('Date formatting error:', error);
+        return `${eventDate} ${eventTime || ''}`.trim();
+    }
+};
 </script>
