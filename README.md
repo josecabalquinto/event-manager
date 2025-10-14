@@ -33,46 +33,54 @@ A comprehensive event management application built with Laravel 11, Vue.js 3 (Co
 ### Setup Instructions
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/josecabalquinto/event-manager.git
    cd event-manager
    ```
 
 2. **Install PHP dependencies**
+
    ```bash
    composer install
    ```
 
 3. **Install JavaScript dependencies**
+
    ```bash
    npm install
    ```
 
 4. **Environment configuration**
+
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
 5. **Database setup**
-   
+
    The application is configured to use SQLite by default. The database file is already created at `database/database.sqlite`.
-   
+
    Run migrations and seed the database:
+
    ```bash
    php artisan migrate --seed
    ```
 
    This will create:
+
    - Admin user: `admin@example.com` / `password`
    - Test user: `user@example.com` / `password`
 
 6. **Build frontend assets**
+
    ```bash
    npm run build
    ```
 
 7. **Start the development server**
+
    ```bash
    php artisan serve
    ```
@@ -85,10 +93,10 @@ To run the development server with hot module replacement:
 
 ```bash
 # Terminal 1 - Laravel server
-php artisan serve
+php artisan serve --host=0.0.0.0 --port=8000
 
 # Terminal 2 - Vite dev server
-npm run dev
+npm run dev -- --host=192.168.254.161 --port=5173
 ```
 
 ## Default Credentials
@@ -96,10 +104,12 @@ npm run dev
 After running the seeder, you can log in with:
 
 **Admin Account:**
+
 - Email: `admin@example.com`
 - Password: `password`
 
 **Regular User Account:**
+
 - Email: `user@example.com`
 - Password: `password`
 
@@ -158,17 +168,20 @@ event-manager/
 ## Key Features Implementation
 
 ### QR Code Generation
+
 - Automatic UUID-based QR code generation on registration
 - QR codes are displayed using `qrcode.vue` component
 - Can be scanned using any QR code reader
 
 ### Event Check-In
+
 - Admin can manually enter QR codes for check-in
 - Real-time feedback on check-in status
 - Prevents duplicate check-ins
 - Tracks who performed the check-in and when
 
 ### Role-Based Access Control
+
 - Admin middleware protects admin routes
 - Users can only view their own registrations
 - Admins have full access to all features

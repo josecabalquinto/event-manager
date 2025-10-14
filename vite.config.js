@@ -17,4 +17,11 @@ export default defineConfig({
             },
         }),
     ],
+
 });
+
+// server: {
+//     host: '192.168.254.161',
+//     port: 5173,
+//     cors: true,
+// },

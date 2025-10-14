@@ -25,7 +25,7 @@
                         <div class="flex space-x-2">
                             <input v-model="qrCode" type="text" placeholder="Enter QR Code"
                                    class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <button @click="checkIn" :disabled="!qrCode || processing"
+                            <button @click="checkIn()" :disabled="!qrCode || processing"
                                     class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
                                 Check In
                             </button>
@@ -192,7 +192,7 @@ const checkIn = async (scannedCode = null) => {
 
     try {
         const response = await axios.post(route('admin.check-in.scan'), {
-            qr_code: code,
+            qr_code: String(code),
         });
         
         result.value = response.data;

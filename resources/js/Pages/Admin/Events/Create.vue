@@ -137,12 +137,105 @@
                         <div v-if="form.errors.banner_image" class="text-red-500 text-sm mt-1">{{ form.errors.banner_image }}</div>
                     </div>
 
+                    <!-- Event Type and Organizer -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Event Type</label>
+                            <select v-model="form.event_type_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select Event Type</option>
+                                <option v-for="eventType in eventTypes" :key="eventType.id" :value="eventType.id">
+                                    {{ eventType.name }}
+                                </option>
+                            </select>
+                            <div v-if="form.errors.event_type_id" class="text-red-500 text-sm mt-1">{{ form.errors.event_type_id }}</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Event Organizer</label>
+                            <select v-model="form.event_organizer_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select Organizer</option>
+                                <option v-for="organizer in eventOrganizers" :key="organizer.id" :value="organizer.id">
+                                    {{ organizer.name }}
+                                </option>
+                            </select>
+                            <div v-if="form.errors.event_organizer_id" class="text-red-500 text-sm mt-1">{{ form.errors.event_organizer_id }}</div>
+                        </div>
+                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Max Participants (optional)</label>
                         <input v-model="form.max_participants" type="number" min="1"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                         <div v-if="form.errors.max_participants" class="text-red-500 text-sm mt-1">{{ form.errors.max_participants }}</div>
                     </div>
+                    <!-- Certificate Configuration -->
+                    <div class="border-t pt-6">
+                        <div class="flex items-center mb-4">
+                            <input v-model="form.has_certificate" type="checkbox" id="has_certificate"
+                                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
+                            <label for="has_certificate" class="ml-2 text-sm font-medium text-gray-700">
+                                Enable Certificates for this Event
+                            </label>
+                        </div>
+
+                        <div v-if="form.has_certificate" class="space-y-4 pl-6 border-l-2 border-indigo-200">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Title (Optional)</label>
+                                <input v-model="form.certificate_title" type="text" 
+                                       :placeholder="form.title || 'Same as event title'"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="text-xs text-gray-500 mt-1">Leave blank to use event title</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Description</label>
+                                <textarea v-model="form.certificate_description" rows="2" 
+                                          placeholder="Brief description of what this certificate represents"
+                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Template</label>
+                                <textarea v-model="form.certificate_template" rows="4" 
+                                          placeholder="This is to certify that {participant_name} has successfully completed {event_title} on {event_date}."
+                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    Use placeholders: {participant_name}, {event_title}, {event_date}, {completion_date}
+                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Certificate Signatories</label>
+                                <div class="space-y-3">
+                                    <div v-for="(signatory, index) in form.certificate_signatories" :key="index" 
+                                         class="flex space-x-3 items-start">
+                                        <div class="flex-1">
+                                            <input v-model="signatory.name" type="text" 
+                                                   placeholder="Signatory Name"
+                                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        </div>
+                                        <div class="flex-1">
+                                            <input v-model="signatory.title" type="text" 
+                                                   placeholder="Title/Position"
+                                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        </div>
+                                        <button type="button" @click="removeSignatory(index)" 
+                                                class="text-red-500 hover:text-red-700 p-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <button type="button" @click="addSignatory" 
+                                            class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                        + Add Signatory
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex items-center">
                         <input v-model="form.is_published" type="checkbox" id="is_published"
                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
@@ -169,6 +262,11 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import { ref, onMounted, nextTick } from 'vue';
 
+const props = defineProps({
+    eventTypes: Array,
+    eventOrganizers: Array,
+});
+
 const locationInput = ref(null);
 const mapContainer = ref(null);
 const showMap = ref(false);
@@ -189,7 +287,15 @@ const form = useForm({
     longitude: null,
     banner_image: null,
     max_participants: null,
+    event_type_id: '',
+    event_organizer_id: '',
     is_published: false,
+    // Certificate fields
+    has_certificate: false,
+    certificate_title: '',
+    certificate_description: '',
+    certificate_template: '',
+    certificate_signatories: [{ name: '', title: '' }],
 });
 
 const toggleMap = () => {
@@ -392,7 +498,43 @@ const removeBanner = () => {
     }
 };
 
-const submit = () => {
-    form.post(route('admin.events.store'));
+const addSignatory = () => {
+    form.certificate_signatories.push({ name: '', title: '' });
+};
+
+const removeSignatory = (index) => {
+    if (form.certificate_signatories.length > 1) {
+        form.certificate_signatories.splice(index, 1);
+    }
+};
+
+const submit = async () => {
+    form.post(route('admin.events.store'), {
+        onError: async (errors) => {
+            // Check if it's a CSRF error (419 or token mismatch)
+            if (errors.message && (errors.message.includes('419') || errors.message.includes('CSRF'))) {
+                console.log('CSRF error detected, attempting refresh...');
+                
+                try {
+                    // Try to refresh CSRF token
+                    const response = await fetch('/csrf-token');
+                    const data = await response.json();
+                    
+                    // Update meta tag
+                    const metaTag = document.head.querySelector('meta[name="csrf-token"]');
+                    if (metaTag) {
+                        metaTag.setAttribute('content', data.token);
+                    }
+                    
+                    // Show user-friendly message and suggest retry
+                    alert('Session expired. Please try submitting the form again.');
+                } catch (error) {
+                    console.error('Failed to refresh token:', error);
+                    // If refresh failed, reload the page
+                    window.location.reload();
+                }
+            }
+        }
+    });
 };
 </script>

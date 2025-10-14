@@ -161,12 +161,130 @@
                         <div v-if="form.errors.banner_image" class="text-red-500 text-sm mt-1">{{ form.errors.banner_image }}</div>
                     </div>
 
+                    <!-- Event Type and Organizer -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Event Type</label>
+                            <select v-model="form.event_type_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select Event Type</option>
+                                <option v-for="eventType in eventTypes" :key="eventType.id" :value="eventType.id">
+                                    {{ eventType.name }}
+                                </option>
+                            </select>
+                            <div v-if="form.errors.event_type_id" class="text-red-500 text-sm mt-1">{{ form.errors.event_type_id }}</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Event Organizer</label>
+                            <select v-model="form.event_organizer_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select Organizer</option>
+                                <option v-for="organizer in eventOrganizers" :key="organizer.id" :value="organizer.id">
+                                    {{ organizer.name }}
+                                </option>
+                            </select>
+                            <div v-if="form.errors.event_organizer_id" class="text-red-500 text-sm mt-1">{{ form.errors.event_organizer_id }}</div>
+                        </div>
+                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Max Participants (optional)</label>
                         <input v-model="form.max_participants" type="number" min="1"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                         <div v-if="form.errors.max_participants" class="text-red-500 text-sm mt-1">{{ form.errors.max_participants }}</div>
                     </div>
+                    <!-- Certificate Configuration -->
+                    <div class="border-t pt-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <input v-model="form.has_certificate" type="checkbox" id="has_certificate"
+                                       class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
+                                <label for="has_certificate" class="ml-2 text-sm font-medium text-gray-700">
+                                    Enable Certificates for this Event
+                                </label>
+                            </div>
+                            <div v-if="form.has_certificate" class="text-sm text-gray-600">
+                                {{ event.registrations_count || 0 }} registrations • {{ event.checked_in_count || 0 }} checked in • {{ event.certificates_generated_count || 0 }} certificates
+                            </div>
+                        </div>
+
+                        <div v-if="form.has_certificate" class="space-y-4 pl-6 border-l-2 border-indigo-200">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Title (Optional)</label>
+                                <input v-model="form.certificate_title" type="text" 
+                                       :placeholder="form.title || 'Same as event title'"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="text-xs text-gray-500 mt-1">Leave blank to use event title</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Description</label>
+                                <textarea v-model="form.certificate_description" rows="2" 
+                                          placeholder="Brief description of what this certificate represents"
+                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Certificate Template</label>
+                                <textarea v-model="form.certificate_template" rows="4" 
+                                          placeholder="This is to certify that {participant_name} has successfully completed {event_title} on {event_date}."
+                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    Use placeholders: {participant_name}, {event_title}, {event_date}, {completion_date}
+                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Certificate Signatories</label>
+                                <div class="space-y-3">
+                                    <div v-for="(signatory, index) in form.certificate_signatories" :key="index" 
+                                         class="flex space-x-3 items-start">
+                                        <div class="flex-1">
+                                            <input v-model="signatory.name" type="text" 
+                                                   placeholder="Signatory Name"
+                                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        </div>
+                                        <div class="flex-1">
+                                            <input v-model="signatory.title" type="text" 
+                                                   placeholder="Title/Position"
+                                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        </div>
+                                        <button type="button" @click="removeSignatory(index)" 
+                                                class="text-red-500 hover:text-red-700 p-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <button type="button" @click="addSignatory" 
+                                            class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                        + Add Signatory
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Certificate Management Actions -->
+                            <div v-if="event.registrations_count > 0" class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-sm font-medium text-gray-800 mb-3">Certificate Management</h4>
+                                <div class="flex flex-wrap gap-3">
+                                    <Link v-if="event.checked_in_count > 0" 
+                                          :href="route('admin.certificates.create', { event_id: event.id })"
+                                          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                                        Generate Certificates ({{ event.checked_in_count }} eligible)
+                                    </Link>
+                                    <Link v-if="event.certificates_generated_count > 0"
+                                          :href="route('admin.certificates.index', { event_id: event.id })"
+                                          class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                                        View Certificates ({{ event.certificates_generated_count }})
+                                    </Link>
+                                    <span v-if="event.checked_in_count === 0" class="text-sm text-gray-500 py-2">
+                                        No participants checked in yet
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex items-center">
                         <input v-model="form.is_published" type="checkbox" id="is_published"
                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
@@ -195,6 +313,8 @@ import { ref, nextTick, onMounted } from 'vue';
 
 const props = defineProps({
     event: Object,
+    eventTypes: Array,
+    eventOrganizers: Array,
 });
 
 const locationInput = ref(null);
@@ -219,8 +339,27 @@ const form = useForm({
     banner_image: null,
     remove_banner_image: false,
     max_participants: props.event.max_participants,
+    event_type_id: props.event.event_type_id,
+    event_organizer_id: props.event.event_organizer_id,
     is_published: props.event.is_published,
+    // Certificate fields
+    has_certificate: props.event.has_certificate,
+    certificate_title: props.event.certificate_title || '',
+    certificate_description: props.event.certificate_description || '',
+    certificate_template: props.event.certificate_template || '',
+    certificate_signatories: props.event.certificate_signatories?.length ? props.event.certificate_signatories : [{ name: '', title: '' }],
 });
+
+// Signatory management functions
+const addSignatory = () => {
+    form.certificate_signatories.push({ name: '', title: '' });
+};
+
+const removeSignatory = (index) => {
+    if (form.certificate_signatories.length > 1) {
+        form.certificate_signatories.splice(index, 1);
+    }
+};
 
 // Initialize coordinates if they exist
 onMounted(() => {
@@ -429,16 +568,25 @@ const undoRemoveBanner = () => {
 };
 
 const submit = () => {
+    const errorHandler = (errors) => {
+        if (errors.message && errors.message.includes('419')) {
+            // CSRF token expired, reload the page to get a fresh token
+            window.location.reload();
+        }
+    };
+
     // Check if we have a file upload or need special handling
     if (form.banner_image || form.remove_banner_image) {
         // Use the special POST route for file uploads
         form.post(route('admin.events.update-with-files', props.event.id), {
             preserveScroll: true,
+            onError: errorHandler
         });
     } else {
         // Use regular PUT for normal updates
         form.put(route('admin.events.update', props.event.id), {
             preserveScroll: true,
+            onError: errorHandler
         });
     }
 };

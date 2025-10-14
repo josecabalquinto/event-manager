@@ -2,50 +2,66 @@
     <AppLayout>
         <!-- Hero Section with Banner -->
         <div class="relative">
-            <div v-if="event.has_banner_image && event.banner_image_url" class="relative h-96 md:h-[500px] overflow-hidden rounded-2xl mb-12 shadow-2xl">
+            <div v-if="event.has_banner_image && event.banner_image_url" class="relative h-96 md:h-[500px] overflow-hidden rounded-3xl mb-12 shadow-2xl">
                 <img :src="event.banner_image_url" 
                      :alt="event.title + ' banner'" 
-                     class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-700"
+                     class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-700"
                      @click="showImageModal = true"
                      title="Click to view full image">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                     <div class="max-w-4xl">
-                        <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">{{ event.title }}</h1>
-                        <div class="flex flex-wrap items-center space-x-6 text-lg">
-                            <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-2">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
-                                <span class="font-medium">{{ formatEventDateTime(event.event_date, event.event_time) }}</span>
                             </div>
-                            <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-2">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span class="text-yellow-400 font-semibold text-sm tracking-wider uppercase">CICTE CertChain</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">{{ event.title }}</h1>
+                        <div class="flex flex-wrap items-center gap-4 text-lg">
+                            <div class="flex items-center bg-white/20 backdrop-blur-md rounded-2xl px-6 py-3 border border-white/10">
+                                <svg class="w-5 h-5 mr-3 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="font-semibold">{{ formatEventDateTime(event.event_date, event.event_time) }}</span>
+                            </div>
+                            <div class="flex items-center bg-white/20 backdrop-blur-md rounded-2xl px-6 py-3 border border-white/10">
+                                <svg class="w-5 h-5 mr-3 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <span class="font-medium">{{ event.location }}</span>
+                                <span class="font-semibold">{{ event.location }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div v-else class="text-center mb-12">
-                <div class="bg-white rounded-2xl shadow-lg p-12">
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{ event.title }}</h1>
-                    <div class="flex flex-wrap justify-center items-center space-x-6 text-lg text-gray-600">
-                        <div class="flex items-center bg-blue-50 rounded-full px-4 py-2 mb-2">
-                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-gradient-to-br from-white via-yellow-50/50 to-amber-50/30 backdrop-blur-sm rounded-3xl shadow-2xl p-12 border border-yellow-200/20">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg transform rotate-3">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            <span class="font-medium text-blue-800">{{ formatEventDateTime(event.event_date, event.event_time) }}</span>
                         </div>
-                        <div class="flex items-center bg-purple-50 rounded-full px-4 py-2 mb-2">
-                            <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <span class="text-yellow-600 font-bold text-lg tracking-wider uppercase">CICTE CertChain</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">{{ event.title }}</h1>
+                    <div class="flex flex-wrap justify-center items-center gap-4 text-lg">
+                        <div class="flex items-center bg-gradient-to-r from-yellow-100 to-amber-100 rounded-2xl px-6 py-3 border border-yellow-200 shadow-sm">
+                            <svg class="w-5 h-5 mr-3 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-semibold text-yellow-800">{{ formatEventDateTime(event.event_date, event.event_time) }}</span>
+                        </div>
+                        <div class="flex items-center bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl px-6 py-3 border border-orange-200 shadow-sm">
+                            <svg class="w-5 h-5 mr-3 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            <span class="font-medium text-purple-800">{{ event.location }}</span>
+                            <span class="font-semibold text-orange-800">{{ event.location }}</span>
                         </div>
                     </div>
                 </div>
@@ -53,53 +69,55 @@
         </div>
 
         <!-- Main Content Grid -->
-        <div class="grid lg:grid-cols-3 gap-12 mb-12">
+        <div class="grid lg:grid-cols-3 gap-8 mb-12">
             <!-- Main Content -->
-            <div class="lg:col-span-2">
+            <div class="lg:col-span-2 space-y-8">
                 <!-- Event Description -->
-                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                <div class="bg-gradient-to-br from-white via-yellow-50/30 to-amber-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-yellow-200/20">
                     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg transform -rotate-3">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        About This Event
+                        <span class="bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">About This Event</span>
                     </h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                        <p>{{ event.description }}</p>
+                        <p class="text-lg">{{ event.description }}</p>
                     </div>
                 </div>
 
                 <!-- Location Map -->
-                <div v-if="event.latitude && event.longitude" class="bg-white rounded-2xl shadow-lg p-8">
+                <div v-if="event.latitude && event.longitude" class="bg-gradient-to-br from-white via-orange-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-orange-200/20">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <div class="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mr-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg transform rotate-3">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
-                            Event Location
+                            <span class="bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">Event Location</span>
                         </h2>
                         <button @click="showLocationMap = !showLocationMap"
-                                class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg font-medium hover:bg-purple-200 transition-colors duration-200">
+                                class="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-white rounded-2xl font-semibold hover:from-yellow-500 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             {{ showLocationMap ? 'Hide Map' : 'Show Map' }}
                         </button>
                     </div>
                     
                     <div v-if="showLocationMap" 
                          ref="eventMapContainer" 
-                         class="w-full h-80 bg-gray-100 rounded-xl overflow-hidden shadow-inner"
+                         class="w-full h-80 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl overflow-hidden shadow-inner border border-yellow-200/30"
                          style="min-height: 320px;">
                         <div class="flex items-center justify-center h-full text-gray-500">
                             <div class="text-center">
-                                <svg class="w-12 h-12 mx-auto mb-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                <p class="font-medium">Loading interactive map...</p>
+                                <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold text-gray-600">Loading interactive map...</p>
                             </div>
                         </div>
                     </div>
@@ -107,93 +125,174 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="lg:col-span-1">
+            <div class="lg:col-span-1 space-y-8">
                 <!-- Event Details Card -->
-                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 sticky top-8">
-                    <h3 class="text-xl font-bold text-gray-900 mb-6">Event Details</h3>
+                <div class="bg-gradient-to-br from-white via-yellow-50/50 to-amber-50/30 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-yellow-200/20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">Event Details</h3>
+                    </div>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-8">
                         <!-- Date & Time -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <p class="font-semibold text-gray-900 mb-1">Date & Time</p>
-                                <p class="text-gray-600">{{ formatEventDateTime(event.event_date, event.event_time) }}</p>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-900 mb-2 text-lg">Date & Time</p>
+                                <p class="text-gray-700 font-medium">{{ formatEventDateTime(event.event_date, event.event_time) }}</p>
                             </div>
                         </div>
 
                         <!-- Location -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <p class="font-semibold text-gray-900 mb-1">Location</p>
-                                <p class="text-gray-600">{{ event.location }}</p>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-900 mb-2 text-lg">Location</p>
+                                <p class="text-gray-700 font-medium">{{ event.location }}</p>
                             </div>
                         </div>
 
                         <!-- Available Spots -->
-                        <div v-if="event.max_participants" class="flex items-start">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        <div v-if="event.max_participants" class="flex items-start group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <p class="font-semibold text-gray-900 mb-1">Availability</p>
-                                <p class="text-gray-600">{{ event.available_spots }} of {{ event.max_participants }} spots available</p>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                    <div class="bg-gradient-to-r from-green-500 to-blue-500 h-2 rounded-full transition-all duration-300" 
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-900 mb-2 text-lg">Availability</p>
+                                <p class="text-gray-700 font-medium mb-3">{{ event.available_spots }} of {{ event.max_participants }} spots available</p>
+                                <div class="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-3 overflow-hidden shadow-inner">
+                                    <div class="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 h-3 rounded-full transition-all duration-500 shadow-sm" 
                                          :style="{ width: ((event.max_participants - event.available_spots) / event.max_participants * 100) + '%' }"></div>
+                                </div>
+                                <div class="flex justify-between text-sm text-gray-600 mt-2">
+                                    <span>{{ event.max_participants - event.available_spots }} registered</span>
+                                    <span>{{ event.available_spots }} remaining</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="!$page.props.auth.user" class="border-t pt-6">
-                    <h3 class="text-xl font-bold mb-4">Register for this Event</h3>
-                    <form @submit.prevent="submit" class="space-y-4">
+                
+                <!-- Guest Registration Form -->
+                <div v-if="!$page.props.auth.user" class="bg-gradient-to-br from-white via-green-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-green-200/20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-green-400 to-yellow-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold bg-gradient-to-r from-green-600 to-yellow-600 bg-clip-text text-transparent">Register for this Event</h3>
+                    </div>
+                    <form @submit.prevent="submit" class="space-y-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Name</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
                             <input v-model="form.name" type="text" required
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <div v-if="form.errors.name" class="text-red-500 text-sm mt-1">{{ form.errors.name }}</div>
+                                   class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
+                            <div v-if="form.errors.name" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.name }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Email</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                             <input v-model="form.email" type="email" required
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <div v-if="form.errors.email" class="text-red-500 text-sm mt-1">{{ form.errors.email }}</div>
+                                   class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
+                            <div v-if="form.errors.email" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.email }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Password</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
                             <input v-model="form.password" type="password" required
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <div v-if="form.errors.password" class="text-red-500 text-sm mt-1">{{ form.errors.password }}</div>
+                                   class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
+                            <div v-if="form.errors.password" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.password }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Confirm Password</label>
                             <input v-model="form.password_confirmation" type="password" required
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                   class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
                         </div>
+
+                        <!-- Student Information Section -->
+                        <div class="border-t border-yellow-200/50 pt-6">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Student Information</h4>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Student ID <span class="text-red-500">*</span></label>
+                                <input v-model="form.student_id" type="text" required
+                                       placeholder="e.g., 20-1956"
+                                       pattern="[0-9]{2}-[0-9]{4}"
+                                       title="Please enter student ID in format: XX-XXXX (e.g., 20-1956)"
+                                       class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
+                                <div v-if="form.errors.student_id" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.student_id }}</div>
+                                <p class="text-xs text-gray-500 mt-1">Format: XX-XXXX (e.g., 20-1956)</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-4 mt-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Course <span class="text-red-500">*</span></label>
+                                    <select v-model="form.course" required
+                                            class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30">
+                                        <option value="">Select Course</option>
+                                        <option v-for="course in courses" :key="course" :value="course">{{ course }}</option>
+                                    </select>
+                                    <div v-if="form.errors.course" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.course }}</div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Year Level <span class="text-red-500">*</span></label>
+                                    <select v-model="form.year_level" required
+                                            class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30">
+                                        <option value="">Select Year</option>
+                                        <option v-for="year in yearLevels" :key="year" :value="year">{{ year }}</option>
+                                    </select>
+                                    <div v-if="form.errors.year_level" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.year_level }}</div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Section <span class="text-red-500">*</span></label>
+                                    <input v-model="form.section" type="text" required
+                                           placeholder="e.g., A, B, C"
+                                           class="w-full px-4 py-3 rounded-2xl border-2 border-yellow-200 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 bg-gradient-to-r from-white to-yellow-50/30" />
+                                    <div v-if="form.errors.section" class="text-red-500 text-sm mt-2 font-medium">{{ form.errors.section }}</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="submit" :disabled="form.processing || event.is_full"
-                                class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
-                            {{ event.is_full ? 'Event Full' : 'Register' }}
+                                class="w-full px-6 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-white rounded-2xl font-bold text-lg hover:from-yellow-500 hover:to-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                            <svg v-if="form.processing" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            {{ event.is_full ? 'Event Full' : (form.processing ? 'Creating Account...' : 'Register & Join Event') }}
                         </button>
                     </form>
                 </div>
-                <div v-else class="border-t pt-6">
+                
+                <!-- Authenticated User Registration -->
+                <div v-else class="bg-gradient-to-br from-white via-blue-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-blue-200/20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-yellow-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-yellow-600 bg-clip-text text-transparent">Join this Event</h3>
+                    </div>
                     <button @click="register" :disabled="event.is_full || isRegistering"
-                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 flex items-center justify-center">
+                            class="w-full px-6 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-white rounded-2xl font-bold text-lg hover:from-yellow-500 hover:to-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
                         <svg v-if="isRegistering" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -205,16 +304,17 @@
         </div>
         
         <!-- Image Modal -->
-        <div v-if="showImageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" @click="showImageModal = false">
-            <div class="relative max-w-4xl max-h-screen p-4">
-                <button @click="showImageModal = false" class="absolute top-2 right-2 z-10 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 transition-colors">
+        <div v-if="showImageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm" @click="showImageModal = false">
+            <div class="relative max-w-6xl max-h-screen p-6">
+                <button @click="showImageModal = false" 
+                        class="absolute -top-4 -right-4 z-10 bg-gradient-to-r from-yellow-400 to-amber-500 text-white rounded-full p-3 hover:from-yellow-500 hover:to-amber-600 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-110">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
                 <img :src="event.banner_image_url" 
                      :alt="event.title + ' banner'" 
-                     class="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                     class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl border-4 border-white/20"
                      @click.stop>
             </div>
         </div>
@@ -235,7 +335,14 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    student_id: '',
+    course: '',
+    year_level: '',
+    section: '',
 });
+
+const courses = ['BSIT', 'BSIS', 'BLIS', 'BSEMC'];
+const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
 const isRegistering = ref(false);
 const showLocationMap = ref(false);

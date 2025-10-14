@@ -15,6 +15,10 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'student_id',
+        'course',
+        'year_level',
+        'section',
     ];
 
     protected $hidden = [
@@ -39,5 +43,24 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->is_admin;
+    }
+
+    public function getFullStudentInfoAttribute()
+    {
+        if (!$this->student_id) {
+            return null;
+        }
+
+        return $this->student_id . ' - ' . $this->course . ' ' . $this->year_level . ' ' . $this->section;
+    }
+
+    public static function getAvailableCourses()
+    {
+        return ['BSIT', 'BSIS', 'BLIS', 'BSEMC'];
+    }
+
+    public static function getAvailableYearLevels()
+    {
+        return ['1st Year', '2nd Year', '3rd Year', '4th Year'];
     }
 }

@@ -13,19 +13,19 @@ class DatabaseSeeder extends Seeder
         // Create admin user
         User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+            'email' => 'admin@eventmanager.com',
+            'password' => Hash::make('@imadmin123'),
             'is_admin' => true,
             'email_verified_at' => now(),
         ]);
 
         // Create regular user
-        User::create([
-            'name' => 'Test User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('password'),
-            'is_admin' => false,
-            'email_verified_at' => now(),
-        ]);
+        // User::create([
+        //     'name' => 'Test User',
+        //     'email' => 'user@example.com',
+        //     'password' => Hash::make('password'),
+        //     'is_admin' => false,
+        //     'email_verified_at' => now(),
+        // ]);
     }
 }

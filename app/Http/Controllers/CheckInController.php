@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CheckInController extends Controller
@@ -25,9 +26,17 @@ class CheckInController extends Controller
 
     public function scan(Request $request)
     {
-        $request->validate([
-            'qr_code' => 'required|string',
-        ]);
+        try {
+            $validated = $request->validate([
+                'qr_code' => 'required|string|min:1',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed: ' . $e->getMessage(),
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
         $registration = EventRegistration::where('qr_code', $request->qr_code)
             ->with(['event', 'user', 'checkIn'])

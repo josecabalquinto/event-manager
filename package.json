@@ -7,10 +7,13 @@
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
+        "@nomicfoundation/hardhat-toolbox": "^5.0.0",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.12",
         "axios": "^1.7.4",
+        "dotenv": "^17.2.3",
+        "hardhat": "^2.26.0",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.31",
         "tailwindcss": "^3.2.1",
@@ -19,7 +22,12 @@
     "dependencies": {
         "@zxing/browser": "^0.1.4",
         "@zxing/library": "^0.21.3",
+        "chart.js": "^4.5.1",
+        "chartjs-adapter-date-fns": "^3.0.0",
+        "ethers": "^6.15.0",
         "qrcode.vue": "^3.4.1",
-        "vue": "^3.4.0"
+        "vue": "^3.4.0",
+        "vue-chartjs": "^5.3.2",
+        "web3": "^4.16.0"
     }
 }
