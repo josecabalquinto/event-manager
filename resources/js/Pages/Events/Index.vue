@@ -224,6 +224,20 @@
                                 <span class="font-semibold text-gray-800 truncate text-base">{{ event.location }}</span>
                             </div>
                             
+                            <div v-if="event.allowed_courses && event.allowed_courses.length > 0" class="flex items-center text-sm text-gray-600">
+                                <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-xl flex items-center justify-center mr-4 shadow-md group-hover:rotate-3 transition-transform duration-300">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex flex-wrap gap-1">
+                                    <span v-for="course in event.allowed_courses" :key="course" 
+                                          class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">
+                                        {{ course }}
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div v-if="event.max_participants" class="flex items-center text-sm text-gray-600">
                                 <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl flex items-center justify-center mr-4 shadow-md group-hover:rotate-3 transition-transform duration-300">
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -234,8 +248,27 @@
                             </div>
                         </div>
                         
-                        <!-- Enhanced CTA Button -->
-                        <Link :href="route('events.show', event.id)" 
+                        <!-- Registration Status or CTA Button -->
+                        <div v-if="event.is_registered" class="w-full bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="bg-green-500 rounded-full p-2 mr-3">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-green-800">Registered</p>
+                                        <p class="text-xs text-green-600">{{ event.registered_at }}</p>
+                                    </div>
+                                </div>
+                                <Link :href="route('events.show', event.id)" 
+                                      class="px-4 py-2 bg-green-600 text-white font-medium text-sm rounded-lg hover:bg-green-700 transition-colors">
+                                    View Details
+                                </Link>
+                            </div>
+                        </div>
+                        <Link v-else :href="route('events.show', event.id)" 
                               class="block w-full text-center px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold text-lg rounded-2xl hover:from-yellow-400 hover:to-yellow-300 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl border-2 border-yellow-300/30 hover:border-yellow-200">
                             <span class="flex items-center justify-center">
                                 <span class="mr-3">Learn More</span>

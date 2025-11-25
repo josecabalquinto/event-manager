@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(EventRegistration::class);
     }
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
     public function isAdmin()
     {
         return $this->is_admin;

@@ -269,7 +269,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Certificate management
     Route::resource('certificates', AdminCertificateController::class);
-    Route::get('certificates/{certificate}/download', [AdminCertificateController::class, 'download'])->name('certificates.download');
+    Route::get('certificates/{certificate}/download', [AdminCertificateController::class, 'download'])->name('certificates.download-admin');
     Route::get('certificates/{certificate}/preview', [AdminCertificateController::class, 'preview'])->name('certificates.preview');
     Route::post('events/{event}/generate-certificates', [AdminCertificateController::class, 'generateForEvent'])->name('events.generate-certificates');
     Route::patch('certificates/{certificate}/mark-generated', [AdminCertificateController::class, 'markAsGenerated'])->name('certificates.mark-generated');

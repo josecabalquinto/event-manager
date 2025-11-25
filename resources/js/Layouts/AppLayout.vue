@@ -78,13 +78,14 @@
                                     Admin
                                 </span>
                             </Link>
-                            <Link :href="route('dashboard')" 
-                                  class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-yellow-700 hover:bg-yellow-50 transition-all duration-200">
+                            <Link :href="route('profile.edit')" 
+                                  class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
+                                  :class="$page.url.startsWith('/profile') ? 'bg-yellow-100 text-yellow-800 shadow-sm' : 'text-gray-600 hover:text-yellow-700 hover:bg-yellow-50'">
                                 <span class="flex items-center">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2h14a2 2 0 012 2v2M9 5l2 2 4-4"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    Dashboard
+                                    Profile
                                 </span>
                             </Link>
                             <Link :href="route('logout')" method="post" as="button"
@@ -194,9 +195,9 @@
                         <p class="text-gray-400 text-sm">
                             © {{ new Date().getFullYear() }} CICTE CertChain. All rights reserved.
                         </p>
-                        <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                        <!-- <div class="flex items-center space-x-6 mt-4 md:mt-0">
                             <span class="text-gray-400 text-xs">Development in-progress</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

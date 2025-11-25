@@ -79,10 +79,11 @@ class AdminDashboardController extends Controller
         ];
 
         // Registration status distribution
-        $registrationStatusData = EventRegistration::selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status')
-            ->toArray();
+        $registrationStatusData = [
+            'pending' => EventRegistration::where('status', 'pending')->count(),
+            'approved' => EventRegistration::where('status', 'approved')->count(),
+            'rejected' => EventRegistration::where('status', 'rejected')->count(),
+        ];
 
         // Top performing events (by attendance rate)
         $topEvents = Event::with(['registrations', 'checkIns'])

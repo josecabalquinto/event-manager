@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-yellow-50 flex">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-yellow-50">
         <!-- Sidebar -->
-        <div class="fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-gray-900 to-black shadow-2xl transform -translate-x-full transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0" :class="{ 'translate-x-0': sidebarOpen }">
-            <div class="flex flex-col h-full">
+        <div class="fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-gray-900 to-black shadow-2xl transform -translate-x-full transition-transform duration-200 ease-in-out lg:translate-x-0" :class="{ 'translate-x-0': sidebarOpen }">
+            <div class="flex flex-col h-full overflow-y-auto">
                 <!-- Logo/Brand -->
                 <div class="flex items-center justify-between h-20 px-6 bg-gradient-to-r from-gray-800 to-black border-b border-gray-700">
                     <Link :href="route('admin.dashboard')" class="flex items-center">
@@ -157,7 +157,7 @@
         <div v-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black bg-opacity-25 lg:hidden"></div>
 
         <!-- Main content -->
-        <div class="flex-1 flex flex-col lg:ml-0">
+        <div class="flex-1 lg:ml-72">
             <!-- Top bar for mobile -->
             <div class="lg:hidden bg-white shadow-lg border-b border-gray-200">
                 <div class="flex items-center justify-between h-16 px-6">
@@ -180,7 +180,7 @@
             </div>
 
             <!-- Main content area -->
-            <main class="flex-1 p-6 lg:p-8 overflow-auto">
+            <main class="flex-1 min-h-screen p-6 lg:p-8">
                 <div class="max-w-7xl mx-auto">
                     <!-- Flash Messages -->
                     <div v-if="$page.props.flash.success" class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-400 p-4 rounded-r-xl shadow-sm">

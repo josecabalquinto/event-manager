@@ -25,6 +25,7 @@ class Certificate extends Model
         'blockchain_address',
         'is_blockchain_verified',
         'blockchain_issued_at',
+        'sample',
     ];
 
     protected function casts(): array

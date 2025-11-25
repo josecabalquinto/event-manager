@@ -58,12 +58,34 @@
                 <!-- QR Code Section - Only show for approved registrations -->
                 <div v-if="registration.status === 'approved'" class="border-t pt-6">
                     <h3 class="text-xl font-semibold mb-4 text-center">Your QR Code</h3>
-                    <div class="flex justify-center">
-                        <QRCodeVue3 :value="registration.qr_code" :size="300" />
+                    <div class="flex flex-col items-center">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-indigo-200">
+                            <QRCodeVue3 :value="registration.qr_code" :size="300" />
+                        </div>
+                        <div class="mt-6 text-center max-w-md">
+                            <p class="text-sm text-gray-600 mb-3">
+                                Present this QR code at the event for check-in
+                            </p>
+                            <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
+                                <p class="text-xs font-semibold text-gray-700 mb-2">Your QR Code (UUID):</p>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <code class="text-xs bg-white px-3 py-2 rounded border border-indigo-300 text-indigo-700 font-mono break-all">
+                                        {{ registration.qr_code }}
+                                    </code>
+                                    <button @click="copyToClipboard(registration.qr_code)" 
+                                            class="px-3 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors flex-shrink-0"
+                                            title="Copy to clipboard">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">
+                                    💡 Admin can also manually enter this code for check-in
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-center text-sm text-gray-500 mt-4">
-                        Present this QR code at the event for check-in
-                    </p>
                 </div>
                 
                 <!-- Status Messages -->
@@ -135,6 +157,29 @@ const getStatusTextClass = (status) => {
             return 'text-red-600';
         default:
             return 'text-gray-600';
+    }
+};
+
+const copyToClipboard = async (text) => {
+    try {
+        await navigator.clipboard.writeText(text);
+        alert('QR Code copied to clipboard!');
+    } catch (err) {
+        console.error('Failed to copy:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('QR Code copied to clipboard!');
+        } catch (err) {
+            alert('Failed to copy to clipboard');
+        }
+        document.body.removeChild(textArea);
     }
 };
 </script>

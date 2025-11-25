@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        <div v-for="(event, index) in top_events" :key="index" 
+                        <div v-for="(event, index) in (top_events || [])" :key="index" 
                              class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div>
                                 <p class="font-medium text-gray-900 text-sm">{{ event.title }}</p>
@@ -151,7 +151,7 @@
                                 <p class="text-lg font-bold text-green-600">{{ event.attendance_rate }}%</p>
                             </div>
                         </div>
-                        <div v-if="top_events.length === 0" class="text-center py-8 text-gray-500">
+                        <div v-if="!top_events || top_events.length === 0" class="text-center py-8 text-gray-500">
                             <p>No events with attendance data yet</p>
                         </div>
                     </div>
@@ -208,12 +208,37 @@ import PieChart from '@/Components/Charts/PieChart.vue'
 import LineChart from '@/Components/Charts/LineChart.vue'
 
 const props = defineProps({
-    statistics: Object,
-    recent_events: Array,
-    monthly_data: Array,
-    event_status_data: Object,
-    registration_status_data: Object,
-    top_events: Array,
+    statistics: {
+        type: Object,
+        default: () => ({
+            total_events: 0,
+            total_users: 0,
+            total_registrations: 0,
+            total_check_ins: 0,
+            total_certificates: 0,
+            overall_attendance_rate: 0
+        })
+    },
+    recent_events: {
+        type: Array,
+        default: () => []
+    },
+    monthly_data: {
+        type: Array,
+        default: () => []
+    },
+    event_status_data: {
+        type: Object,
+        default: () => ({ published: 0, draft: 0 })
+    },
+    registration_status_data: {
+        type: Object,
+        default: () => ({ pending: 0, approved: 0, rejected: 0 })
+    },
+    top_events: {
+        type: Array,
+        default: () => []
+    },
 })
 
 // Chart data computations

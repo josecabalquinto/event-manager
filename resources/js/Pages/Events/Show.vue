@@ -126,6 +126,72 @@
 
             <!-- Sidebar -->
             <div class="lg:col-span-1 space-y-8">
+                <!-- User Profile Card (for authenticated users) -->
+                <div v-if="$page.props.auth.user && userProfile" class="bg-gradient-to-br from-white via-purple-50/50 to-indigo-50/30 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-purple-200/20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Your Profile</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Full Name -->
+                        <div class="flex items-start group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-xl flex items-center justify-center mr-3 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Full Name</p>
+                                <p class="text-gray-900 font-bold">{{ userProfile.name }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Student ID -->
+                        <div v-if="userProfile.student_id" class="flex items-start group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center mr-3 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Student ID</p>
+                                <p class="text-gray-900 font-bold">{{ userProfile.student_id }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Course -->
+                        <div v-if="userProfile.course" class="flex items-start group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center mr-3 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Course</p>
+                                <p class="text-gray-900 font-bold">{{ userProfile.course }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Year & Section -->
+                        <div v-if="userProfile.year_level && userProfile.section" class="flex items-start group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-violet-400 to-purple-500 rounded-xl flex items-center justify-center mr-3 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Year & Section</p>
+                                <p class="text-gray-900 font-bold">{{ userProfile.year_level }} - Section {{ userProfile.section }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Event Details Card -->
                 <div class="bg-gradient-to-br from-white via-yellow-50/50 to-amber-50/30 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-yellow-200/20">
                     <div class="flex items-center mb-6">
@@ -165,6 +231,24 @@
                             </div>
                         </div>
 
+                        <!-- Target Courses -->
+                        <div v-if="event.allowed_courses && event.allowed_courses.length > 0" class="flex items-start group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-900 mb-2 text-lg">Target Courses</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span v-for="course in event.allowed_courses" :key="course" 
+                                          class="px-3 py-1 bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-800 rounded-full text-sm font-medium">
+                                        {{ course }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Available Spots -->
                         <div v-if="event.max_participants" class="flex items-start group">
                             <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 shadow-lg transform transition-transform group-hover:scale-110">
@@ -189,6 +273,27 @@
                 </div>
 
                 
+                <!-- Already Registered (for authenticated users) -->
+                <div v-if="$page.props.auth.user && event.is_registered" class="bg-gradient-to-br from-green-50 via-emerald-50 to-green-50 rounded-3xl shadow-xl p-8 border-2 border-green-400">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-800 mb-3">You're Registered!</h3>
+                        <p class="text-green-700 mb-2">You have successfully registered for this event.</p>
+                        <p class="text-sm text-green-600 font-medium mb-6">Registered on {{ event.registered_at }}</p>
+                        <!-- <div class="bg-white/60 rounded-2xl p-4 border border-green-200">
+                            <p class="text-sm text-gray-700 mb-2">Check your dashboard for your QR code</p>
+                            <Link :href="route('my-events.index')" 
+                                  class="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                View My Events
+                            </Link>
+                        </div> -->
+                    </div>
+                </div>
+
                 <!-- Guest Registration Form -->
                 <div v-if="!$page.props.auth.user" class="bg-gradient-to-br from-white via-green-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-green-200/20">
                     <div class="flex items-center mb-6">
@@ -282,7 +387,7 @@
                 </div>
                 
                 <!-- Authenticated User Registration -->
-                <div v-else class="bg-gradient-to-br from-white via-blue-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-blue-200/20">
+                <div v-else-if="!event.is_registered" class="bg-gradient-to-br from-white via-blue-50/30 to-yellow-50/20 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-blue-200/20">
                     <div class="flex items-center mb-6">
                         <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-yellow-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -328,6 +433,7 @@ import { ref, watch, nextTick } from 'vue';
 
 const props = defineProps({
     event: Object,
+    userProfile: Object,
 });
 
 const form = useForm({

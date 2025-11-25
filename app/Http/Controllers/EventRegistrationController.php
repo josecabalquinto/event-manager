@@ -91,6 +91,11 @@ class EventRegistrationController extends Controller
             // Registered user
             $user = Auth::user();
 
+            // Check course restriction
+            if (!empty($user->course) && !$event->isAllowedForCourse($user->course)) {
+                return back()->with('error', 'This event is only available for: ' . $event->allowed_courses_display);
+            }
+
             // Check if already registered
             if (EventRegistration::where('event_id', $event->id)
                 ->where('user_id', $user->id)
@@ -120,6 +125,11 @@ class EventRegistrationController extends Controller
                     'guest_year_level' => 'required|in:1st Year,2nd Year,3rd Year,4th Year',
                     'guest_section' => 'required|string|max:10',
                 ]);
+
+                // Check course restriction for guest
+                if (!$event->isAllowedForCourse($validated['guest_course'])) {
+                    return back()->with('error', 'This event is only available for: ' . $event->allowed_courses_display);
+                }
 
                 // Check for duplicate guest registration with same email and student ID
                 if (EventRegistration::where('event_id', $event->id)
@@ -160,6 +170,11 @@ class EventRegistrationController extends Controller
                     'year_level' => 'required|in:1st Year,2nd Year,3rd Year,4th Year',
                     'section' => 'required|string|max:10',
                 ]);
+
+                // Check course restriction for new account
+                if (!$event->isAllowedForCourse($validated['course'])) {
+                    return back()->with('error', 'This event is only available for: ' . $event->allowed_courses_display);
+                }
 
                 $user = User::create([
                     'name' => $validated['name'],

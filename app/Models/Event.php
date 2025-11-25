@@ -14,6 +14,7 @@ class Event extends Model
         'description',
         'event_date',
         'event_time',
+        'days',
         'location',
         'latitude',
         'longitude',
@@ -30,6 +31,7 @@ class Event extends Model
         'certificate_text_color',
         'certificate_border_style',
         'certificate_signatories',
+        'allowed_courses',
     ];
 
     protected function casts(): array
@@ -39,6 +41,7 @@ class Event extends Model
             'is_published' => 'boolean',
             'has_certificate' => 'boolean',
             'certificate_signatories' => 'json',
+            'allowed_courses' => 'json',
         ];
     }
 
@@ -126,5 +129,33 @@ class Event extends Model
         }
 
         return "This is to certify that {participant_name} has successfully completed {event_title} on {event_date}.";
+    }
+
+    public function isOpenToAllCourses()
+    {
+        return empty($this->allowed_courses) || count($this->allowed_courses) === 0;
+    }
+
+    public function isAllowedForCourse($course)
+    {
+        if ($this->isOpenToAllCourses()) {
+            return true;
+        }
+
+        return in_array($course, $this->allowed_courses);
+    }
+
+    public function getAllowedCoursesDisplayAttribute()
+    {
+        if ($this->isOpenToAllCourses()) {
+            return 'All CICTE Courses';
+        }
+
+        return implode(', ', $this->allowed_courses);
+    }
+
+    public static function getAvailableCourses()
+    {
+        return ['BSIT', 'BSIS', 'BSEMC', 'BLIS'];
     }
 }

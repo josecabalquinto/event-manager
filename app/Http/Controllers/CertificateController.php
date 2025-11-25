@@ -64,6 +64,7 @@ class CertificateController extends Controller
                 'completion_date' => $certificate->completion_date->format('Y-m-d'),
                 'is_generated' => $certificate->is_generated,
                 'certificate_url' => $certificate->certificate_url,
+                'certificate_path' => $certificate->certificate_path,
                 'certificate_hash' => $certificate->certificate_hash,
                 'blockchain_tx_hash' => $certificate->blockchain_tx_hash,
                 'is_blockchain_verified' => $certificate->is_blockchain_verified,
@@ -73,6 +74,7 @@ class CertificateController extends Controller
                     'id' => $certificate->eventRegistration->event->id,
                     'title' => $certificate->eventRegistration->event->title,
                     'location' => $certificate->eventRegistration->event->location,
+                    'certificate_signatories' => $certificate->eventRegistration->event->certificate_signatories,
                 ],
             ],
         ]);

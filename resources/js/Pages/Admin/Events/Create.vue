@@ -16,7 +16,7 @@
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                         <div v-if="form.errors.description" class="text-red-500 text-sm mt-1">{{ form.errors.description }}</div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Event Date</label>
                             <input v-model="form.event_date" type="date" required
@@ -28,6 +28,12 @@
                             <input v-model="form.event_time" type="time" required
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                             <div v-if="form.errors.event_time" class="text-red-500 text-sm mt-1">{{ form.errors.event_time }}</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">No. of Days</label>
+                            <input v-model="form.days" type="number" min="1" required
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            <div v-if="form.errors.days" class="text-red-500 text-sm mt-1">{{ form.errors.days }}</div>
                         </div>
                     </div>
                     <div>
@@ -169,6 +175,27 @@
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                         <div v-if="form.errors.max_participants" class="text-red-500 text-sm mt-1">{{ form.errors.max_participants }}</div>
                     </div>
+
+                    <!-- Course Restrictions -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Target Courses (optional)</label>
+                        <p class="text-xs text-gray-500 mb-3">Leave all unchecked to allow all CICTE courses</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <div v-for="course in availableCourses" :key="course" class="flex items-center">
+                                <input 
+                                    type="checkbox" 
+                                    :id="'course-' + course"
+                                    :value="course"
+                                    v-model="form.allowed_courses"
+                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
+                                <label :for="'course-' + course" class="ml-2 text-sm text-gray-700">
+                                    {{ course }}
+                                </label>
+                            </div>
+                        </div>
+                        <div v-if="form.errors.allowed_courses" class="text-red-500 text-sm mt-1">{{ form.errors.allowed_courses }}</div>
+                    </div>
+
                     <!-- Certificate Configuration -->
                     <div class="border-t pt-6">
                         <div class="flex items-center mb-4">
@@ -267,6 +294,8 @@ const props = defineProps({
     eventOrganizers: Array,
 });
 
+const availableCourses = ['BSIT', 'BSIS', 'BSEMC', 'BLIS'];
+
 const locationInput = ref(null);
 const mapContainer = ref(null);
 const showMap = ref(false);
@@ -282,6 +311,7 @@ const form = useForm({
     description: '',
     event_date: '',
     event_time: '',
+    days: 1,
     location: '',
     latitude: null,
     longitude: null,
@@ -290,6 +320,7 @@ const form = useForm({
     event_type_id: '',
     event_organizer_id: '',
     is_published: false,
+    allowed_courses: [],
     // Certificate fields
     has_certificate: false,
     certificate_title: '',

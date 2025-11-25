@@ -26,7 +26,7 @@
                                 </button>
                                 <a 
                                     v-if="certificate.is_generated"
-                                    :href="route('admin.certificates.download', certificate.id)"
+                                    :href="route('admin.certificates.download-admin', certificate.id)"
                                     class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200"
                                 >
                                     Download Certificate
